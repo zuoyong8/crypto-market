@@ -1,14 +1,16 @@
-server:
-    build:
-      context: .
-      dockerfile: cmd/Dockerfile
-    restart: always
-    ports:
-      - '8080:8080'
-    ulimits:
-      nproc: 65535
-      nofile:
-        soft: 20000
-        hard: 40000
-    volumes:
-      - ./logs:/logs/server
+version: '3'
+services:
+    server:
+        build:
+            context: .
+            dockerfile: cmd/Dockerfile
+        restart: always
+        ports:
+            - '8080:8080'
+        ulimits:
+            nproc: 65535
+        nofile:
+            soft: 20000
+            hard: 40000
+        volumes:
+            - ./logs:/logs/server

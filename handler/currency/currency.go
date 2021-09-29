@@ -11,19 +11,15 @@ import (
 
 //获取汇率
 func GetCurrencyRate(c *gin.Context) {
-	var req model.CurrencyRateReq
+	//
+	var req model.CurrencyRateReq = model.CurrencyRateReq{
+		From: "CNY",
+		To:   "USD",
+	}
 
 	if err := c.ShouldBindQuery(&req); err != nil {
 		util.ResponseErrorJson(c, 1000001)
 		return
-	}
-
-	//
-	if req.From == "" {
-		req.From = "CNY"
-	}
-	if req.To == "" {
-		req.To = "USD"
 	}
 
 	//

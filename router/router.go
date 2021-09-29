@@ -10,6 +10,7 @@ import (
 	"go.uber.org/zap"
 
 	"crypto-market/handler/currency"
+	"crypto-market/handler/indicator"
 	"crypto-market/middleware"
 )
 
@@ -35,7 +36,12 @@ func RouterEngine(zapLogger *zap.Logger) *gin.Engine {
 
 	apiGroup := engine.Group("api")
 	apiV1Group := apiGroup.Group("v1")
+
+	//
 	currencyGroup(apiV1Group)
+
+	//
+	indicatorGroup(apiV1Group)
 
 	// apiV2Group := engine.Group("v2")
 	return engine
@@ -45,4 +51,10 @@ func RouterEngine(zapLogger *zap.Logger) *gin.Engine {
 func currencyGroup(rg *gin.RouterGroup) {
 	//获取汇率
 	rg.GET("/currency/rate", currency.GetCurrencyRate)
+}
+
+//
+func indicatorGroup(rg *gin.RouterGroup) {
+	//获取汇率
+	rg.GET("/indicator/list", indicator.GetIndicators)
 }
