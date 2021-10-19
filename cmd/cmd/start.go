@@ -6,6 +6,8 @@ import (
 	"github.com/spf13/cobra"
 
 	"crypto-market/common/xlog"
+	"crypto-market/config"
+	"crypto-market/initializr"
 	"crypto-market/router"
 )
 
@@ -53,19 +55,19 @@ func usage() {
 
 //初始化各种服务
 func setup() {
-	// if configPath != "" {
-	// 	config.ConfigFilePath = configPath
-	// }
-	// initializers.InitAllResources()
-	// //获取错误信息
-	// service.InitErrors()
+	//加载配置文件
+	if err := config.ReadConfig("../config/config.toml"); err != nil {
+		panic("read config error")
+	}
+	//初始化redis
+	initializr.InitRedis()
 }
 
 //运行
 func run() error {
-	// defer initializers.CloseResources()
 	//初始化日志
 	zapLog := xlog.Init("server", logPath)
+
 	//获取路由
 	engine := router.RouterEngine(zapLog)
 	//启动

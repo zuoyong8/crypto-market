@@ -18,5 +18,6 @@ func GetIndicators(c *gin.Context) {
 		return
 	}
 	//
-	util.ResponseJson(c, "", indicator.GetIndicators(req.Name))
+	util.ResponseJson(c, "", indicator.GetIndicators(&req))
+
 }

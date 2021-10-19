@@ -8,5 +8,6 @@ type CurrencyRateReq struct {
 
 //
 type IndicatorReq struct {
-	Name string `json:"name" form:"name"`
+	Name  string `json:"name" form:"name"`
+	Field string `json:"field" form:"field"`
 }

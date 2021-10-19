@@ -1,11 +1,19 @@
 package indicator
 
-import "strings"
+import (
+	"crypto-market/model"
+	"encoding/json"
+	"fmt"
+	"log"
+	"strings"
+
+	"github.com/graphql-go/graphql"
+)
 
 //
 type Indicator struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
+	Name        string `json:"name,omitempty"`
+	Description string `json:"description,omitempty"`
 }
 
 var (
@@ -25,7 +33,7 @@ var (
 	
 	
 			使用技巧
-			重点参考著名的葛兰碧法则
+			重点参考著名的葛兰碧法则	
 			1.平均线从下降逐渐转为走平，而价格从下方突破平均线，为买进信号。
 			2.价格虽然跌破平均线，但是又立刻回升到平均线上，此时平均线仍然持续上升，仍为买进信号。
 			3.价格趋势走在平均线上，价格下跌并未跌破平均线且立刻反转上升，也是买进信号。
@@ -246,15 +254,55 @@ var (
 )
 
 //
-func GetIndicators(name string) []Indicator {
-	if name != "" {
+func GetIndicators(req *model.IndicatorReq) []Indicator {
+	if req != nil {
 		var indicators []Indicator
-		for _, indicator := range Indicators {
-			if strings.Contains(indicator.Name, name) {
-				indicators = append(indicators, indicator)
+		if req.Name != "" {
+			for _, indicator := range Indicators {
+				if strings.Contains(indicator.Name, req.Name) {
+					switch req.Field {
+					case "name":
+						indicator.Description = ""
+					case "description":
+						indicator.Name = ""
+					}
+					indicators = append(indicators, indicator)
+				}
 			}
 		}
 		return indicators
 	}
 	return Indicators
+}
+
+//
+func GraphQL() {
+	fields := graphql.Fields{
+		"hello": &graphql.Field{
+			Type: graphql.String,
+			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+				return "world", nil
+			},
+		},
+	}
+	rootQuery := graphql.ObjectConfig{Name: "RootQuery", Fields: fields}
+	schemaConfig := graphql.SchemaConfig{Query: graphql.NewObject(rootQuery)}
+	schema, err := graphql.NewSchema(schemaConfig)
+	if err != nil {
+		log.Fatalf("failed to create new schema, error: %v", err)
+	}
+
+	// Query
+	query := `
+		{
+			hello
+		}
+	`
+	params := graphql.Params{Schema: schema, RequestString: query}
+	r := graphql.Do(params)
+	if len(r.Errors) > 0 {
+		log.Fatalf("failed to execute graphql operation, errors: %+v", r.Errors)
+	}
+	rJSON, _ := json.Marshal(r)
+	fmt.Printf("%s \n", rJSON)
 }

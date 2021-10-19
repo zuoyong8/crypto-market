@@ -37,3 +37,6 @@
 2021-09-29 18:05:58.102	info	xlog/log.go:84	修改日志等级:  info => debug
 2021-09-29 18:05:58.603	info	middleware/logger.go:41	/api/v1/indicator/list	{"status": 200, "method": "GET", "path": "/api/v1/indicator/list", "query": "name=%E6%8C%87%E6%A0%87", "ip": "127.0.0.1", "user-agent": "PostmanRuntime/7.28.4", "time": "2021-09-29T10:05:58Z", "latency": "3.3368295s"}
 2021-09-29 18:06:13.509	info	middleware/logger.go:41	/api/v1/indicator/list	{"status": 200, "method": "GET", "path": "/api/v1/indicator/list", "query": "name=KDJ", "ip": "127.0.0.1", "user-agent": "PostmanRuntime/7.28.4", "time": "2021-09-29T10:06:13Z", "latency": "2.8061351s"}
+2021-09-29 18:36:37.219	info	xlog/log.go:84	修改日志等级:  info => debug
+2021-09-29 18:36:50.701	info	middleware/logger.go:41	/api/v1/indicator/list	{"status": 200, "method": "GET", "path": "/api/v1/indicator/list", "query": "name=KDJ&field=name", "ip": "127.0.0.1", "user-agent": "PostmanRuntime/7.28.4", "time": "2021-09-29T10:36:50Z", "latency": "6.1221556s"}
+2021-09-29 18:37:01.858	info	middleware/logger.go:41	/api/v1/indicator/list	{"status": 200, "method": "GET", "path": "/api/v1/indicator/list", "query": "name=KDJ", "ip": "127.0.0.1", "user-agent": "PostmanRuntime/7.28.4", "time": "2021-09-29T10:37:01Z", "latency": "4.5366204s"}

@@ -11,3 +11,5 @@ func GetCurrencyRate(req *model.CurrencyRateReq) float64 {
 	currency := usd.NewCurrencyRate(req.From, req.To)
 	return currency.GetCurrencyRate()
 }
+
+//

@@ -9,6 +9,7 @@ import (
 	"github.com/newrelic/go-agent/v3/newrelic"
 	"go.uber.org/zap"
 
+	"crypto-market/handler/binance"
 	"crypto-market/handler/currency"
 	"crypto-market/handler/indicator"
 	"crypto-market/middleware"
@@ -37,14 +38,24 @@ func RouterEngine(zapLogger *zap.Logger) *gin.Engine {
 	apiGroup := engine.Group("api")
 	apiV1Group := apiGroup.Group("v1")
 
+	apiV3Group := apiGroup.Group("v3")
+	//币安行情
+	binanceApiGroup(apiV3Group)
 	//
 	currencyGroup(apiV1Group)
 
 	//
 	indicatorGroup(apiV1Group)
 
-	// apiV2Group := engine.Group("v2")
 	return engine
+}
+
+//币安行情
+func binanceApiGroup(rg *gin.RouterGroup) {
+	//币种配置信息
+	rg.GET("/exchangeInfo", binance.GetExchangeInfo)
+	//24h价格变化
+	rg.GET("/ticker/24hr", binance.GetTicker24hr)
 }
 
 //
