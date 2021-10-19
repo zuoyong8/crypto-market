@@ -9,8 +9,8 @@ services:
             - '8080:8080'
         ulimits:
             nproc: 65535
-        nofile:
-            soft: 20000
-            hard: 40000
+     #   nofile:
+     #       soft: 20000
+     #       hard: 40000
         volumes:
             - ./logs:/logs/server

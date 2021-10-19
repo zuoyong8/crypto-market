@@ -33,7 +33,7 @@ var (
 func init() {
 	StartCmd.PersistentFlags().IntVarP(&port, "port", "p", 8080, "server port")
 	StartCmd.PersistentFlags().StringVarP(&configPath, "config", "c", "config/config.yml", "config file path")
-	StartCmd.PersistentFlags().StringVarP(&logPath, "log", "l", ".", "log file path")
+	StartCmd.PersistentFlags().StringVarP(&logPath, "log", "l", "./log", "log file path")
 }
 
 //显示终端信息
@@ -56,7 +56,7 @@ func usage() {
 //初始化各种服务
 func setup() {
 	//加载配置文件
-	if err := config.ReadConfig("../config/config.toml"); err != nil {
+	if err := config.ReadConfig("./config/config.toml"); err != nil {
 		panic("read config error")
 	}
 	//初始化redis
